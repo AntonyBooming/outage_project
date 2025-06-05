@@ -20,8 +20,10 @@ Dataframe: 1535 rows and 10 columns
 | **CUSTOMERS.AFFECTED**       | Number of customers affected by the power outage event.                                              |
 | **RES.SALES**                | Electricity consumption in the residential sector (megawatt-hour).                                   |
 | **RES.CUSTOMERS**            | Annual number of customers served in the residential electricity sector of the U.S. state.           |
+
 ---
 ## Data Cleaning and Exploratory Data Analysis
+
 | U.S._STATE   | OUTAGE.START.DATE.TIME   | OUTAGE.RESTORATION.DATE.TIME   | CAUSE.CATEGORY     | CAUSE.CATEGORY.DETAIL   |   HURRICANE.NAMES |   OUTAGE.DURATION |   CUSTOMERS.AFFECTED |     RES.SALES |   RES.CUSTOMERS |
 |:-------------|:-------------------------|:-------------------------------|:-------------------|:------------------------|------------------:|------------------:|---------------------:|--------------:|----------------:|
 | nan          | NaT                      | NaT                            | nan                | nan                     |               nan |               nan |                  nan | nan           |   nan           |
