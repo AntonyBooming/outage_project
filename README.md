@@ -22,9 +22,17 @@ Dataframe: 1535 rows and 10 columns
 | **RES.CUSTOMERS**            | Annual number of customers served in the residential electricity sector of the U.S. state.           |
 ---
 ## Data Cleaning and Exploratory Data Analysis
+| U.S._STATE   | OUTAGE.START.DATE.TIME   | OUTAGE.RESTORATION.DATE.TIME   | CAUSE.CATEGORY     | CAUSE.CATEGORY.DETAIL   |   HURRICANE.NAMES |   OUTAGE.DURATION |   CUSTOMERS.AFFECTED |     RES.SALES |   RES.CUSTOMERS |
+|:-------------|:-------------------------|:-------------------------------|:-------------------|:------------------------|------------------:|------------------:|---------------------:|--------------:|----------------:|
+| nan          | NaT                      | NaT                            | nan                | nan                     |               nan |               nan |                  nan | nan           |   nan           |
+| Minnesota    | 2011-07-01 17:00:00      | 2011-07-03 20:00:00            | severe weather     | nan                     |               nan |              3060 |                70000 |   2.33292e+06 |     2.30874e+06 |
+| Minnesota    | 2014-05-11 18:38:00      | 2014-05-11 18:39:00            | intentional attack | vandalism               |               nan |                 1 |                  nan |   1.58699e+06 |     2.34586e+06 |
+| Minnesota    | 2010-10-26 20:00:00      | 2010-10-28 22:00:00            | severe weather     | heavy wind              |               nan |              3000 |                70000 |   1.46729e+06 |     2.30029e+06 |
+| Minnesota    | 2012-06-19 04:30:00      | 2012-06-20 23:00:00            | severe weather     | thunderstorm            |               nan |              2550 |                68200 |   1.85152e+06 |     2.31734e+06 |
+
 <iframe
   src="state-outage-bar.html"
-  width="1000"
+  width="600"
   height="800"
   frameborder="0"
 ></iframe>
