@@ -23,7 +23,7 @@ Dataframe: 1535 rows and 10 columns
 
 ---
 ## Data Cleaning and Exploratory Data Analysis
-I took the necessary steps to convert value of certain columns so that I can do my intended anaylsis on it. More specifically, it made it easier for me to run various transform methods using types of transformer modules. In partucular, I converted the columns OUTAGE.DURATION, CUSTOMERS.AFFECTED so that I can use it for my baseline and final models. I have also took out 43 cols from the raw dataframe and used only 10 of the columns for my cleaning and analysis processes. Below, I have plitted the cleaned DataFrame in half so that it displays nicer!
+I took the necessary steps to convert the value of certain columns so that I can do my intended analysis on it. More specifically, it made it easier for me to run transform methods using various types of transformer modules. In partucular, I converted the columns OUTAGE.DURATION, CUSTOMERS.AFFECTED so that I can use it for my baseline and final models. I have also took out 43 cols from the raw dataframe and used only 10 of the columns for my cleaning and analysis processes. Below, I have splitted up the cleaned DataFrame in half so that it displays nicer!
 
 | U.S._STATE   | OUTAGE.START.DATE.TIME   | OUTAGE.RESTORATION.DATE.TIME   | CAUSE.CATEGORY     | CAUSE.CATEGORY.DETAIL   |
 |:-------------|:-------------------------|:-------------------------------|:-------------------|:------------------------|
@@ -41,9 +41,13 @@ I took the necessary steps to convert value of certain columns so that I can do 
 |               nan |              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
 |               nan |              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
 
+### Distribution of the number of power outages amongs the U.S states
+
 <iframe
   src="state-outage-bar.html"
   width="600"
   height="800"
   frameborder="0"
 ></iframe>
+
+#### As you may be able to see that California has the highest number of outages in our dataset, whereas Alaska has the least. 
