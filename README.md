@@ -2,7 +2,7 @@
 this is a project for DSC 80 at UCSD 
 
 ---
-#### Introduction
+## Introduction
 ### Question: What are the characteristics of severe power outages?
 ### Significance: My analysis delves a bit into what variables and characteristics energy companies should look out for when predicting the location and the severity of the next major power outage.
 Dataframe: 1535 rows and 10 columns
@@ -20,3 +20,11 @@ Dataframe: 1535 rows and 10 columns
 | **CUSTOMERS.AFFECTED**       | Number of customers affected by the power outage event.                                              |
 | **RES.SALES**                | Electricity consumption in the residential sector (megawatt-hour).                                   |
 | **RES.CUSTOMERS**            | Annual number of customers served in the residential electricity sector of the U.S. state.           |
+---
+## Data Cleaning and Exploratory Data Analysis
+<iframe
+  src="state-outage-bar.html"
+  width="1000"
+  height="800"
+  frameborder="0"
+></iframe>
