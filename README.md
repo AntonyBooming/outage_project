@@ -23,14 +23,23 @@ Dataframe: 1535 rows and 10 columns
 
 ---
 ## Data Cleaning and Exploratory Data Analysis
+I took the necessary steps to convert value of certain columns so that I can do my intended anaylsis on it. More specifically, it made it easier for me to run various transform methods using types of transformer modules. In partucular, I converted the columns OUTAGE.DURATION, CUSTOMERS.AFFECTED so that I can use it for my baseline and final models. I have also took out 43 cols from the raw dataframe and used only 10 of the columns for my cleaning and analysis processes. Below, I have plitted the cleaned DataFrame in half so that it displays nicer!
 
-| U.S._STATE   | OUTAGE.START.DATE.TIME   | OUTAGE.RESTORATION.DATE.TIME   | CAUSE.CATEGORY     | CAUSE.CATEGORY.DETAIL   |   HURRICANE.NAMES |   OUTAGE.DURATION |   CUSTOMERS.AFFECTED |     RES.SALES |   RES.CUSTOMERS |
-|:-------------|:-------------------------|:-------------------------------|:-------------------|:------------------------|------------------:|------------------:|---------------------:|--------------:|----------------:|
-| nan          | NaT                      | NaT                            | nan                | nan                     |               nan |               nan |                  nan | nan           |   nan           |
-| Minnesota    | 2011-07-01 17:00:00      | 2011-07-03 20:00:00            | severe weather     | nan                     |               nan |              3060 |                70000 |   2.33292e+06 |     2.30874e+06 |
-| Minnesota    | 2014-05-11 18:38:00      | 2014-05-11 18:39:00            | intentional attack | vandalism               |               nan |                 1 |                  nan |   1.58699e+06 |     2.34586e+06 |
-| Minnesota    | 2010-10-26 20:00:00      | 2010-10-28 22:00:00            | severe weather     | heavy wind              |               nan |              3000 |                70000 |   1.46729e+06 |     2.30029e+06 |
-| Minnesota    | 2012-06-19 04:30:00      | 2012-06-20 23:00:00            | severe weather     | thunderstorm            |               nan |              2550 |                68200 |   1.85152e+06 |     2.31734e+06 |
+| U.S._STATE   | OUTAGE.START.DATE.TIME   | OUTAGE.RESTORATION.DATE.TIME   | CAUSE.CATEGORY     | CAUSE.CATEGORY.DETAIL   |
+|:-------------|:-------------------------|:-------------------------------|:-------------------|:------------------------|
+| Minnesota    | 2011-07-01 17:00:00      | 2011-07-03 20:00:00            | severe weather     | nan                     |
+| Minnesota    | 2014-05-11 18:38:00      | 2014-05-11 18:39:00            | intentional attack | vandalism               |
+| Minnesota    | 2010-10-26 20:00:00      | 2010-10-28 22:00:00            | severe weather     | heavy wind              |
+| Minnesota    | 2012-06-19 04:30:00      | 2012-06-20 23:00:00            | severe weather     | thunderstorm            |
+| Minnesota    | 2015-07-18 02:00:00      | 2015-07-19 07:00:00            | severe weather     | nan                     |
+
+|   HURRICANE.NAMES |   OUTAGE.DURATION |   CUSTOMERS.AFFECTED |   RES.SALES |   RES.CUSTOMERS |
+|------------------:|------------------:|---------------------:|------------:|----------------:|
+|               nan |              3060 |                70000 | 2.33292e+06 |     2.30874e+06 |
+|               nan |                 1 |                  nan | 1.58699e+06 |     2.34586e+06 |
+|               nan |              3000 |                70000 | 1.46729e+06 |     2.30029e+06 |
+|               nan |              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
+|               nan |              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
 
 <iframe
   src="state-outage-bar.html"
