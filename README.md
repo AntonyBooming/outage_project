@@ -6,8 +6,8 @@ this is a project for DSC 80 at UCSD
 ### Question: What are the characteristics of severe power outages?
 ### Significance: My analysis delves a bit into what variables and characteristics energy companies should look out for when predicting the location and the severity of the next major power outage.
 Dataframe: 1535 rows and 10 columns
-| Columns | Description |
-| ----------- | ----------- |
+| **Columns** | **Description** |
+|-----------|-----------|
 | **U.S._STATE** | Represents all the states in the continental U.S. |
 | **OUTAGE.START.DATE.TIME** | This variable indicates the day and time of the year when the outage event started (as reported by the corresponding Utility in the region) |
 | **OUTAGE.RESTORATION.DATE.TIME** | This variable indicates the day and time of the year when power was restored to all the customers (as reported by the corresponding Utility in the region) |
