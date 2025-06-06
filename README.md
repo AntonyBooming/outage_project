@@ -1,5 +1,6 @@
 # outage_project: data driven approach to understand severe power outage characteristics
 this is a project for DSC 80 at UCSD 
+by Antony Munkhchuluun
 
 ---
 ## Introduction
@@ -41,7 +42,7 @@ I took the necessary steps to convert the value of certain columns so that I can
 |               nan |              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
 |               nan |              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
 
-### Distribution of the number of power outages amongs the U.S states
+### Distribution of the number of power outages amongst the U.S states
 
 <iframe
   src="state-outage-bar.html"
@@ -51,3 +52,40 @@ I took the necessary steps to convert the value of certain columns so that I can
 ></iframe>
 
 #### As you may be able to see that California has the highest number of outages in our dataset, whereas Alaska has the least. 
+
+### Number of power outages relative to residential sector electricity consumption by state
+
+<iframe
+  src="step2-outage-scatter.html"
+  width="600"
+  height="800"
+  frameborder="0"
+></iframe>
+
+#### From this bivariate visualization, you are able to see that as there's more units of electricity consumption in the residential sector, the number of outages increases. This is visible throughout each state where each states have different numbers of outages. The first few rows of this tabular distribution looks like this:
+
+| U.S._STATE   |   RES.SALES |
+|:-------------|------------:|
+| Alabama      | 1.44123e+07 |
+| Alaska       | 0           |
+| Arizona      | 7.1963e+07  |
+| Arkansas     | 3.95144e+07 |
+| California   | 1.54653e+09 |
+
+#### Interestingly enough, there's no residential sector electricity consumption recorded in our DataFrame.
+
+---
+
+## Assessment of Missingness
+I believe the column HURRICANE.NAMES is NMAR and as I looked for additional information on it, it looked like the column CAUSE.CATEGORY.DETAIL had an influence on the column HURRICANE.NAMES, thereby making it MAR. To prove this:
+
+<iframe
+  src="step3-outage-MAR.html"
+  width="600"
+  height="800"
+  frameborder="0"
+></iframe>
+
+#### As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences. Thereby, it concludes that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
+
+
