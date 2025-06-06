@@ -53,12 +53,12 @@ I took the necessary steps to convert the value of certain columns so that I can
 
 #### As you may be able to see that California has the highest number of outages in our dataset, whereas Alaska has the least. 
 
-### Number of power outages relative to residential sector electricity consumption by state
+### Number of power outages relative to residential sector electricity consumption by state(you can touch on the points to see specifics!)
 
 <iframe
   src="step2-outage-scatter.html"
   width="600"
-  height="800"
+  height="650"
   frameborder="0"
 ></iframe>
 
@@ -82,10 +82,21 @@ I believe the column HURRICANE.NAMES is NMAR and as I looked for additional info
 <iframe
   src="step3-outage-MAR.html"
   width="600"
-  height="800"
+  height="650"
   frameborder="0"
 ></iframe>
 
 #### As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences. Thereby, it concludes that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
+
+Conversely, let's now see what column HURRICANE.NAMES column doesn't depend on.
+
+<iframe
+  src="step3-outage-MCAR.html"
+  width="600"
+  height="650"
+  frameborder="0"
+></iframe>
+
+#### By the position of our observed test statistic, you can see that it is a pretty common occurance within our simulated test statistics. Therefore, we can conclude that the missingess of HURRICANE.NAMES column doesn't depend on RES.CUSTOMERS column
 
 
