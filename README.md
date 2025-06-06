@@ -1,11 +1,12 @@
 # outage_project: data driven approach to understand severe power outage characteristics
 this is a project for DSC 80 at UCSD 
+
 by Antony Munkhchuluun
 
 ---
 ## Introduction
 ### Question: What are the characteristics of severe power outages?
-### Significance: My analysis delves a bit into what variables and characteristics energy companies should look out for when predicting the location and the severity of the next major power outage.
+### Significance: My analysis delves a bit into what characteristics residents and energy companies should look out for when predicting the location and the severity of the next major power outage.
 Dataframe: 1535 rows and 10 columns
 
 
@@ -82,11 +83,11 @@ I believe the column HURRICANE.NAMES is NMAR and as I looked for additional info
 <iframe
   src="step3-outage-MAR.html"
   width="600"
-  height="650"
+  height="450"
   frameborder="0"
 ></iframe>
 
-#### As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences. Thereby, it concludes that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
+#### As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences. Thereby, it is likely plausible that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
 
 Conversely, let's now see what column HURRICANE.NAMES column doesn't depend on.
 
@@ -97,6 +98,49 @@ Conversely, let's now see what column HURRICANE.NAMES column doesn't depend on.
   frameborder="0"
 ></iframe>
 
-#### By the position of our observed test statistic, you can see that it is a pretty common occurance within our simulated test statistics. Therefore, we can conclude that the missingess of HURRICANE.NAMES column doesn't depend on RES.CUSTOMERS column
+#### By the position of our observed test statistic, you can see that it is a pretty common occurance within our simulated test statistics. Therefore, it is likely possible that the missingess of HURRICANE.NAMES column doesn't depend on RES.CUSTOMERS column.
+
+---
+
+## Hypothesis Testing 
+Null Hypothesis: On average, the outage duration caused by severe weather is the same as the outage duration caused by public appeal.
+Alternative Hypothesis: On average, the outage duration caused by severe weather is greater than the outage duration caused by public appeal.
+#### Test Statistic: Difference in group means
+#### Significance level: 0.05
+#### P-Value: 0.0
+
+<iframe
+  src="step4-outage-hypotest.html"
+  width="600"
+  height="650"
+  frameborder="0"
+></iframe>
+
+### We reject the null hypothesis! This means that our observed difference(red dashed line) between the average outage duration caused by severe weather and average outage duration caused by public appeal is not common at all under the null hypothesis. Therefore, we can conclude that there's a pattern where if the power outage is caused by severe weather, you are likely to expect a longer outage than if it was caused by public appeal on average.
+
+---
+
+## Framing a prediction problem
+Prediction problem: What is the outage duration gonna be like based on outage cause category and the number of customers affected by the outage.
+Type: Regression Line Model
+Response Variable: Outage Duration(very important to know if the power outage is gonna be severe or not based on different characteristics)
+Known Info: Outage causes, # of customers affected
+
+---
+
+## Baseline Model
+### Description of my baseline model:
+My linear regression model is trained on outage cause categories and the number of customers affected by the certain outage. I left the quantative feature(# of customers affected) to passthrough the pipeline without any encodings. But, I passed the categorical feature(outage cause category) through OneHotEncoder() so that it is more effective for my model.
+
+### Result of my baseline model:
+The output of this baseline model was not good with R^2 score of 0.06859977915829729
+
+My intuition told me that this wasn't a good model because of the magnitude of values in both features. The values of number of customers affected feature are relatively large compared to the OneHotEncoder() transformed outage cause category feature which only consists of values close to 0. Therefore, the number of customers affected feature dominates the other feature when it comes to predicting the response variable. In other words, the 0s and 1s from one-hot encoding will have very little effect in comparison.
+
+---
+
+## Final Model
+
+
 
 
