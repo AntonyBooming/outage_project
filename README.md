@@ -1,4 +1,4 @@
-# A Data-Driven Approach to Understand Severe Power Outage Characteristics
+A Data-Driven Approach to Understand Severe Power Outage Characteristics
 this is a project for DSC 80 at UCSD 
 
 by Antony Munkhchuluun
