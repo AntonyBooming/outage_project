@@ -1,12 +1,16 @@
 **A Data-Driven Approach to Understand Severe Power Outage Characteristics**
+
 this is a project for DSC 80 at UCSD 
 
 by Antony Munkhchuluun
 
 ---
 ## Introduction
-### Question: What are the characteristics of severe power outages?
-### Significance: This analysis provides insight into the key factors associated with severe power outages. By identifying patterns in outage causes, customer impact, and regional differences, the findings can help both residents and energy providers better anticipate where and how future major outages may occur—potentially improving preparedness and response strategies.
+### Question: 
+What are the characteristics of severe power outages?
+### Significance: 
+This analysis provides insight into the key factors associated with severe power outages. By identifying patterns in outage causes, customer impact, and regional differences, the findings can help both residents and energy providers better anticipate where and how future major outages may occur—potentially improving preparedness and response strategies.
+
 Dataframe: 1535 rows and 10 columns
 
 
@@ -50,6 +54,7 @@ I prepared the dataset by transforming key columns to enable more effective anal
 |              3000 |                70000 | 1.46729e+06 |     2.30029e+06 |
 |              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
 |              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
+
 
 ---
 
@@ -118,11 +123,11 @@ I noticed that the HURRICANE.NAMES column appears to be NMAR at first glance. Ho
 On average, the outage duration caused by severe weather is the same as the outage duration caused by public appeal.
 ### Alternative Hypothesis: 
 On average, the outage duration caused by severe weather is greater than the outage duration caused by public appeal.
-#### Test Statistic: 
+### Test Statistic: 
 Difference in group means
-#### Significance level: 
+### Significance level: 
 0.05
-#### P-Value: 
+### P-Value: 
 0.0
 
 <iframe
