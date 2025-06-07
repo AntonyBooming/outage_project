@@ -133,13 +133,57 @@ Known Info: Outage causes, # of customers affected
 My linear regression model is trained on outage cause categories and the number of customers affected by the certain outage. I left the quantative feature(# of customers affected) to passthrough the pipeline without any encodings. But, I passed the categorical feature(outage cause category) through OneHotEncoder() so that it is more effective for my model.
 
 ### Result of my baseline model:
-The output of this baseline model was not good with R^2 score of 0.06859977915829729
+The performance of this baseline model had a R^2 score of 0.069944362461548 on unseen data.
 
 My intuition told me that this wasn't a good model because of the magnitude of values in both features. The values of number of customers affected feature are relatively large compared to the OneHotEncoder() transformed outage cause category feature which only consists of values close to 0. Therefore, the number of customers affected feature dominates the other feature when it comes to predicting the response variable. In other words, the 0s and 1s from one-hot encoding will have very little effect in comparison.
 
 ---
 
 ## Final Model
+Features added:
+1. Standardized # of customer affected
+Why:
+This is good for the prediction task because it brings down the feature around the same scale as the one hot encoded 0s and 1s of the other feature.
+2. Polynomials
+Why:
+This makes my predictive model better because the regression line will be shaped more like where the data points are, meaning it hits more data as the predictive line progresses, which should result in better accuracy.
+
+Result:
+Standardizing the # of customer affected brought the score up to 0.1908772716231314
+Polynomial(degree=14) made the accuracy better to 0.25537566050097293
+
+The method I used to come up with the best performing hyperparameter was by a manual iteration where I performed different polynomial degrees and degree 14 ended up being the best transformation.
+
+Below(provided different model performances of polynomials of standardized # of customers affected):
+
+<iframe
+  src="step7-outage-polyn.html"
+  width="600"
+  height="650"
+  frameborder="0"
+></iframe>
+
+---
+
+## Fairness Analysis
+Group large amount of customers: RES.CUSTOMERS > middle value(4216573.0)
+Group small amount of customers: RES.CUSTOMERS < middle value(4216573.0)
+Evaluation metric: R^2
+Null Hypothesis: Our model is fair. Its R^2 score for large amount of customers and small amount of customers are roughly the same, and any differences are due to random chance.
+Alternative Hypothesis: Our model is unfair. Its R^2 score for large amount of customers is better than small amount of customers.
+Test Statistic: Difference in R^2 between large amount of customers group and small amount of customers group
+Significance Level: 0.05
+P-value: 0.176
+Conclusion: We fail to reject the null hypothesis, meaning that our model is fair among large amount of customers and small amount of customers.
+
+<iframe
+  src="step8-outage-fairnessanalysis.html"
+  width="600"
+  height="650"
+  frameborder="0"
+></iframe>
+
+From this histogram, you can see that our observed difference is as common as our simulated differences, being in the 82th percentile among them.
 
 
 
