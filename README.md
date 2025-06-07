@@ -1,4 +1,4 @@
-# outage_project: data driven approach to understand severe power outage characteristics
+# A Data-Driven Approach to Understand Severe Power Outage Characteristics
 this is a project for DSC 80 at UCSD 
 
 by Antony Munkhchuluun
@@ -6,7 +6,7 @@ by Antony Munkhchuluun
 ---
 ## Introduction
 ### Question: What are the characteristics of severe power outages?
-### Significance: My analysis delves a bit into what characteristics residents and energy companies should look out for when predicting the location and the severity of the next major power outage.
+### Significance: This analysis provides insight into the key factors associated with severe power outages. By identifying patterns in outage causes, customer impact, and regional differences, the findings can help both residents and energy providers better anticipate where and how future major outages may occur—potentially improving preparedness and response strategies.
 Dataframe: 1535 rows and 10 columns
 
 
@@ -25,23 +25,31 @@ Dataframe: 1535 rows and 10 columns
 
 ---
 ## Data Cleaning and Exploratory Data Analysis
-I took the necessary steps to convert the value of certain columns so that I can do my intended analysis on it. More specifically, it made it easier for me to run transform methods using various types of transformer modules. In partucular, I converted the columns OUTAGE.DURATION, CUSTOMERS.AFFECTED so that I can use it for my baseline and final models. I have also took out 43 cols from the raw dataframe and used only 10 of the columns for my cleaning and analysis processes. Below, I have splitted up the cleaned DataFrame in half so that it displays nicer!
+I prepared the dataset by transforming key columns to enable more effective analysis. Specifically, I converted OUTAGE.DURATION and CUSTOMERS.AFFECTED to formats compatible with various transformer modules, making it easier to apply preprocessing techniques for my baseline and final models. I also reduced the original dataset from 43 columns to a focused set of 10 columns for cleaning and analysis. Below, I’ve split the cleaned DataFrame in three for a more readable display.
 
-| U.S._STATE   | OUTAGE.START.DATE.TIME   | OUTAGE.RESTORATION.DATE.TIME   | CAUSE.CATEGORY     | CAUSE.CATEGORY.DETAIL   |
-|:-------------|:-------------------------|:-------------------------------|:-------------------|:------------------------|
-| Minnesota    | 2011-07-01 17:00:00      | 2011-07-03 20:00:00            | severe weather     | nan                     |
-| Minnesota    | 2014-05-11 18:38:00      | 2014-05-11 18:39:00            | intentional attack | vandalism               |
-| Minnesota    | 2010-10-26 20:00:00      | 2010-10-28 22:00:00            | severe weather     | heavy wind              |
-| Minnesota    | 2012-06-19 04:30:00      | 2012-06-20 23:00:00            | severe weather     | thunderstorm            |
-| Minnesota    | 2015-07-18 02:00:00      | 2015-07-19 07:00:00            | severe weather     | nan                     |
+| U.S._STATE   | OUTAGE.START.DATE.TIME   | OUTAGE.RESTORATION.DATE.TIME   |
+|:-------------|:-------------------------|:-------------------------------|
+| Minnesota    | 2011-07-01 17:00:00      | 2011-07-03 20:00:00            |
+| Minnesota    | 2014-05-11 18:38:00      | 2014-05-11 18:39:00            |
+| Minnesota    | 2010-10-26 20:00:00      | 2010-10-28 22:00:00            |
+| Minnesota    | 2012-06-19 04:30:00      | 2012-06-20 23:00:00            |
+| Minnesota    | 2015-07-18 02:00:00      | 2015-07-19 07:00:00            |
 
-|   HURRICANE.NAMES |   OUTAGE.DURATION |   CUSTOMERS.AFFECTED |   RES.SALES |   RES.CUSTOMERS |
-|------------------:|------------------:|---------------------:|------------:|----------------:|
-|               nan |              3060 |                70000 | 2.33292e+06 |     2.30874e+06 |
-|               nan |                 1 |                  nan | 1.58699e+06 |     2.34586e+06 |
-|               nan |              3000 |                70000 | 1.46729e+06 |     2.30029e+06 |
-|               nan |              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
-|               nan |              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
+|   HURRICANE.NAMES | CAUSE.CATEGORY     | CAUSE.CATEGORY.DETAIL   |
+|------------------:|:-------------------|:------------------------|
+|               nan | severe weather     | nan                     |
+|               nan | intentional attack | vandalism               |
+|               nan | severe weather     | heavy wind              |
+|               nan | severe weather     | thunderstorm            |
+|               nan | severe weather     | nan                     |
+
+|   OUTAGE.DURATION |   CUSTOMERS.AFFECTED |   RES.SALES |   RES.CUSTOMERS |
+|------------------:|---------------------:|------------:|----------------:|
+|              3060 |                70000 | 2.33292e+06 |     2.30874e+06 |
+|                 1 |                  nan | 1.58699e+06 |     2.34586e+06 |
+|              3000 |                70000 | 1.46729e+06 |     2.30029e+06 |
+|              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
+|              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
 
 ### Distribution of the number of power outages amongst the U.S states
 
