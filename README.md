@@ -79,7 +79,7 @@ I prepared the dataset by transforming key columns to enable more effective anal
 ></iframe>
 
 
-### From this bivariate visualization, you are able to see that as there's more units of electricity consumption in the residential sector, the number of outages increases. This is visible throughout each state where each states have different numbers of outages. The first few rows of the tabular distribution looks like this:
+From this bivariate visualization, you are able to see that as there's more units of electricity consumption in the residential sector, the number of outages increases. This is visible throughout each state where each states have different numbers of outages. The first few rows of the tabular distribution looks like this:
 
 | U.S._STATE   | RES.SALES     |   # of outages |
 |:-------------|:--------------|---------------:|
@@ -103,7 +103,7 @@ I noticed that the HURRICANE.NAMES column appears to be NMAR at first glance. Ho
   frameborder="0"
 ></iframe>
 
-### As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences(blue bars on the left). Thereby, it is likely plausible that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
+As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences(blue bars on the left). Thereby, it is likely plausible that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
 
 **Conversely, let's now see what column HURRICANE.NAMES column doesn't depend on.**
 
