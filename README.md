@@ -1,4 +1,4 @@
-# A Data-Driven Approach to Understand Severe Power Outage Characteristics
+**A Data-Driven Approach to Understand Severe Power Outage Characteristics**
 this is a project for DSC 80 at UCSD 
 
 by Antony Munkhchuluun
@@ -51,6 +51,8 @@ I prepared the dataset by transforming key columns to enable more effective anal
 |              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
 |              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
 
+---
+
 **Distribution of the number of power outages amongst the U.S states**
 
 <iframe
@@ -61,7 +63,7 @@ I prepared the dataset by transforming key columns to enable more effective anal
 ></iframe>
 
 ### As you may be able to see that California has the highest number of outages in our dataset, whereas Alaska has the least. 
-
+---
 **Number of power outages relative to residential sector electricity consumption by state(you can touch on the points to see specifics!)**
 
 <iframe
@@ -70,6 +72,7 @@ I prepared the dataset by transforming key columns to enable more effective anal
   height="800"
   frameborder="0"
 ></iframe>
+
 
 ### From this bivariate visualization, you are able to see that as there's more units of electricity consumption in the residential sector, the number of outages increases. This is visible throughout each state where each states have different numbers of outages. The first few rows of the tabular distribution looks like this:
 
@@ -111,11 +114,16 @@ I noticed that the HURRICANE.NAMES column appears to be NMAR at first glance. Ho
 ---
 
 ## Hypothesis Testing 
-### Null Hypothesis: On average, the outage duration caused by severe weather is the same as the outage duration caused by public appeal.
-### Alternative Hypothesis: On average, the outage duration caused by severe weather is greater than the outage duration caused by public appeal.
-#### Test Statistic: Difference in group means
-#### Significance level: 0.05
-#### P-Value: 0.0
+### Null Hypothesis: 
+On average, the outage duration caused by severe weather is the same as the outage duration caused by public appeal.
+### Alternative Hypothesis: 
+On average, the outage duration caused by severe weather is greater than the outage duration caused by public appeal.
+#### Test Statistic: 
+Difference in group means
+#### Significance level: 
+0.05
+#### P-Value: 
+0.0
 
 <iframe
   src="step4-outage-hypotest.html"
@@ -129,10 +137,14 @@ I noticed that the HURRICANE.NAMES column appears to be NMAR at first glance. Ho
 ---
 
 ## Framing a prediction problem
-### Prediction problem: How long will a power outage last based on its cause and the number of customers affected?
-### Type: Regression (Linear Model)
-### Response Variable: Outage Duration – understanding this helps assess how severe an outage may be based on key characteristics.
-### Predictor Variables (Known Information): Outage cause category and number of customers affected.
+### Prediction problem: 
+How long will a power outage last based on its cause and the number of customers affected?
+### Type: 
+Regression (Linear Model)
+### Response Variable: 
+Outage Duration – understanding this helps assess how severe an outage may be based on key characteristics.
+### Predictor Variables (Known Information): 
+Outage cause category and number of customers affected.
 
 ---
 
@@ -155,10 +167,10 @@ Reasoning: Standardizing this feature ensures it is on a similar scale to the on
 Reasoning: Applying polynomial transformations allows the model to capture more complex, nonlinear relationships between the input features and the target variable. By increasing the flexibility of the regression line, the model can better fit the underlying patterns in the data, potentially improving predictive performance.
 
 ### Result:
-**Standardizing the # of customer affected brought R^2 score up to 0.1908772716231314**
-**Polynomial(degree=14) made the accuracy better to 0.25537566050097293**
+**Standardizing the # of customer affected brought R^2 score up to 0.1908**
+**Polynomial(degree=14) made the accuracy better to 0.2553**
 
-#### The method I used to come up with the best performing hyperparameter was by a manual iteration where I performed different polynomial degrees and degree 14 ended up being the best transformation. 
+The method I used to come up with the best performing hyperparameter was by a manual iteration where I performed different polynomial degrees and degree 14 ended up being the best transformation. 
 
 **Below(different model performances of polynomials of standardized # of customers affected):**
 
@@ -172,19 +184,27 @@ Reasoning: Applying polynomial transformations allows the model to capture more 
 ---
 
 ## Fairness Analysis
-### Group large amount of customers: RES.CUSTOMERS > middle value(4216573.0)
-### Group small amount of customers: RES.CUSTOMERS < middle value(4216573.0)
-### Evaluation metric: R^2
-### Null Hypothesis: Our model is fair. Its R^2 score for large amount of customers and small amount of customers are roughly the same, and any differences are due to random chance.
-### Alternative Hypothesis: Our model is unfair. Its R^2 score for large amount of customers is better than small amount of customers.
-### Test Statistic: Difference in R^2 between large amount of customers group and small amount of customers group
-### Significance Level: 0.05
-### P-value: 0.176
+### Group large amount of customers: 
+RES.CUSTOMERS > middle value(4216573.0)
+### Group small amount of customers: 
+RES.CUSTOMERS < middle value(4216573.0)
+### Evaluation metric: 
+R^2
+### Null Hypothesis: 
+Our model is fair. Its R^2 score for large amount of customers and small amount of customers are roughly the same, and any differences are due to random chance.
+### Alternative Hypothesis: 
+Our model is unfair. Its R^2 score for large amount of customers is better than small amount of customers.
+### Test Statistic: 
+Difference in R^2 between large amount of customers group and small amount of customers group
+### Significance Level: 
+0.05
+### P-value: 
+0.176
 **Conclusion: We fail to reject the null hypothesis, meaning that our model is fair among large amount of customers and small amount of customers.**
 
 <iframe
   src="step8-outage-fairnessanalysis.html"
-  width="800"
+  width="900"
   height="650"
   frameborder="0"
 ></iframe>
