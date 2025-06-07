@@ -1,4 +1,4 @@
-A Data-Driven Approach to Understand Severe Power Outage Characteristics
+# A Data-Driven Approach to Understand Severe Power Outage Characteristics
 this is a project for DSC 80 at UCSD 
 
 by Antony Munkhchuluun
@@ -17,7 +17,7 @@ Dataframe: 1535 rows and 10 columns
 | **OUTAGE.RESTORATION.DATE.TIME** | The day and time when power was restored to all customers (as reported by the corresponding Utility). |
 | **CAUSE.CATEGORY**           | Categories of the events causing the major power outages.                                            |
 | **CAUSE.CATEGORY.DETAIL**    | Detailed description of the event categories causing the major power outages.                        |
-| **HURRICANE.NAMES**          | If the outage is due to a hurricane, the hurricane name is given here.                               |
+| **HURRICANE.NAMES**          | Name of the hurricanes                                                                               |
 | **OUTAGE.DURATION**          | Duration of outage events (in minutes).                                                              |
 | **CUSTOMERS.AFFECTED**       | Number of customers affected by the power outage event.                                              |
 | **RES.SALES**                | Electricity consumption in the residential sector (megawatt-hour).                                   |
@@ -51,53 +51,53 @@ I prepared the dataset by transforming key columns to enable more effective anal
 |              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
 |              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
 
-### Distribution of the number of power outages amongst the U.S states
+**Distribution of the number of power outages amongst the U.S states**
 
 <iframe
   src="state-outage-bar.html"
-  width="600"
+  width="800"
   height="800"
   frameborder="0"
 ></iframe>
 
-#### As you may be able to see that California has the highest number of outages in our dataset, whereas Alaska has the least. 
+### As you may be able to see that California has the highest number of outages in our dataset, whereas Alaska has the least. 
 
-### Number of power outages relative to residential sector electricity consumption by state(you can touch on the points to see specifics!)
+**Number of power outages relative to residential sector electricity consumption by state(you can touch on the points to see specifics!)**
 
 <iframe
   src="step2-outage-scatter.html"
-  width="600"
-  height="650"
+  width="800"
+  height="800"
   frameborder="0"
 ></iframe>
 
-#### From this bivariate visualization, you are able to see that as there's more units of electricity consumption in the residential sector, the number of outages increases. This is visible throughout each state where each states have different numbers of outages. The first few rows of this tabular distribution looks like this:
+### From this bivariate visualization, you are able to see that as there's more units of electricity consumption in the residential sector, the number of outages increases. This is visible throughout each state where each states have different numbers of outages. The first few rows of the tabular distribution looks like this:
 
-| U.S._STATE   |   RES.SALES |
-|:-------------|------------:|
-| Alabama      | 1.44123e+07 |
-| Alaska       | 0           |
-| Arizona      | 7.1963e+07  |
-| Arkansas     | 3.95144e+07 |
-| California   | 1.54653e+09 |
+| U.S._STATE   | RES.SALES     |   # of outages |
+|:-------------|:--------------|---------------:|
+| Alabama      | 14,412,302    |              6 |
+| Alaska       | 0             |              1 |
+| Arizona      | 71,963,016    |             28 |
+| Arkansas     | 39,514,393    |             25 |
+| California   | 1,546,533,874 |            210 |
 
-#### Interestingly enough, there's no residential sector electricity consumption recorded in our DataFrame.
+### Interestingly enough, there's no residential sector electricity consumption recorded in our DataFrame.
 
 ---
 
 ## Assessment of Missingness
-I believe the column HURRICANE.NAMES is NMAR and as I looked for additional information on it, it looked like the column CAUSE.CATEGORY.DETAIL had an influence on the column HURRICANE.NAMES, thereby making it MAR. To prove this:
+I noticed that the HURRICANE.NAMES column appears to be NMAR at first glance. However, upon further inspection, it seems to be influenced by the values in the CAUSE.CATEGORY.DETAIL column, which suggests that it is actually MAR. To prove this:
 
 <iframe
   src="step3-outage-MAR.html"
-  width="600"
+  width="800"
   height="450"
   frameborder="0"
 ></iframe>
 
-#### As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences. Thereby, it is likely plausible that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
+### As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences(blue bars on the left). Thereby, it is likely plausible that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
 
-Conversely, let's now see what column HURRICANE.NAMES column doesn't depend on.
+**Conversely, let's now see what column HURRICANE.NAMES column doesn't depend on.**
 
 <iframe
   src="step3-outage-MCAR.html"
@@ -106,13 +106,13 @@ Conversely, let's now see what column HURRICANE.NAMES column doesn't depend on.
   frameborder="0"
 ></iframe>
 
-#### By the position of our observed test statistic, you can see that it is a pretty common occurance within our simulated test statistics. Therefore, it is likely possible that the missingess of HURRICANE.NAMES column doesn't depend on RES.CUSTOMERS column.
+### Our test statistic is the difference between the amount of residents served where hurricane name is missing and is not missing. By the position of our observed test statistic, you can see that it is a pretty common occurance within our simulated test statistics. Therefore, it is likely possible that the missingess of HURRICANE.NAMES column doesn't depend on RES.CUSTOMERS column.
 
 ---
 
 ## Hypothesis Testing 
-Null Hypothesis: On average, the outage duration caused by severe weather is the same as the outage duration caused by public appeal.
-Alternative Hypothesis: On average, the outage duration caused by severe weather is greater than the outage duration caused by public appeal.
+### Null Hypothesis: On average, the outage duration caused by severe weather is the same as the outage duration caused by public appeal.
+### Alternative Hypothesis: On average, the outage duration caused by severe weather is greater than the outage duration caused by public appeal.
 #### Test Statistic: Difference in group means
 #### Significance level: 0.05
 #### P-Value: 0.0
@@ -129,44 +129,42 @@ Alternative Hypothesis: On average, the outage duration caused by severe weather
 ---
 
 ## Framing a prediction problem
-Prediction problem: What is the outage duration gonna be like based on outage cause category and the number of customers affected by the outage.
-Type: Regression Line Model
-Response Variable: Outage Duration(very important to know if the power outage is gonna be severe or not based on different characteristics)
-Known Info: Outage causes, # of customers affected
+### Prediction problem: How long will a power outage last based on its cause and the number of customers affected?
+### Type: Regression (Linear Model)
+### Response Variable: Outage Duration – understanding this helps assess how severe an outage may be based on key characteristics.
+### Predictor Variables (Known Information): Outage cause category and number of customers affected.
 
 ---
 
 ## Baseline Model
 ### Description of my baseline model:
-My linear regression model is trained on outage cause categories and the number of customers affected by the certain outage. I left the quantative feature(# of customers affected) to passthrough the pipeline without any encodings. But, I passed the categorical feature(outage cause category) through OneHotEncoder() so that it is more effective for my model.
+I trained my linear regression model using the outage cause category and the number of customers affected. I allowed the numerical feature (number of customers affected) to pass through the pipeline without transformation, while the categorical feature (outage cause category) was processed using a OneHotEncoder() to make it more suitable for the model.
 
 ### Result of my baseline model:
-The performance of this baseline model had a R^2 score of 0.069944362461548 on unseen data.
+The baseline model achieved an R² score of 0.0699 on unseen data.
 
-My intuition told me that this wasn't a good model because of the magnitude of values in both features. The values of number of customers affected feature are relatively large compared to the OneHotEncoder() transformed outage cause category feature which only consists of values close to 0. Therefore, the number of customers affected feature dominates the other feature when it comes to predicting the response variable. In other words, the 0s and 1s from one-hot encoding will have very little effect in comparison.
+I suspected the model's poor performance was due to the imbalance in feature magnitudes. The "number of customers affected" feature contains large numerical values, while the one-hot encoded "outage cause category" feature consists only of 0s and 1s. As a result, the numerical feature likely overshadowed the categorical one during prediction, reducing the impact of the encoded categories on the model’s output.
 
 ---
 
 ## Final Model
-Features added:
-1. Standardized # of customer affected
-Why:
-This is good for the prediction task because it brings down the feature around the same scale as the one hot encoded 0s and 1s of the other feature.
-2. Polynomials
-Why:
-This makes my predictive model better because the regression line will be shaped more like where the data points are, meaning it hits more data as the predictive line progresses, which should result in better accuracy.
+### Features added:
+1. Standardized Number of Customers Affected
+Reasoning: Standardizing this feature ensures it is on a similar scale to the one-hot encoded values (0s and 1s) of the categorical feature. This prevents the model from being unduly influenced by the larger magnitude of the numerical values, allowing both features to contribute more equally to the prediction task.
+2. Polynomial Features
+Reasoning: Applying polynomial transformations allows the model to capture more complex, nonlinear relationships between the input features and the target variable. By increasing the flexibility of the regression line, the model can better fit the underlying patterns in the data, potentially improving predictive performance.
 
-Result:
-Standardizing the # of customer affected brought the score up to 0.1908772716231314
-Polynomial(degree=14) made the accuracy better to 0.25537566050097293
+### Result:
+**Standardizing the # of customer affected brought R^2 score up to 0.1908772716231314**
+**Polynomial(degree=14) made the accuracy better to 0.25537566050097293**
 
-The method I used to come up with the best performing hyperparameter was by a manual iteration where I performed different polynomial degrees and degree 14 ended up being the best transformation.
+#### The method I used to come up with the best performing hyperparameter was by a manual iteration where I performed different polynomial degrees and degree 14 ended up being the best transformation. 
 
-Below(provided different model performances of polynomials of standardized # of customers affected):
+**Below(different model performances of polynomials of standardized # of customers affected):**
 
 <iframe
   src="step7-outage-polyn.html"
-  width="600"
+  width="900"
   height="650"
   frameborder="0"
 ></iframe>
@@ -174,24 +172,24 @@ Below(provided different model performances of polynomials of standardized # of 
 ---
 
 ## Fairness Analysis
-Group large amount of customers: RES.CUSTOMERS > middle value(4216573.0)
-Group small amount of customers: RES.CUSTOMERS < middle value(4216573.0)
-Evaluation metric: R^2
-Null Hypothesis: Our model is fair. Its R^2 score for large amount of customers and small amount of customers are roughly the same, and any differences are due to random chance.
-Alternative Hypothesis: Our model is unfair. Its R^2 score for large amount of customers is better than small amount of customers.
-Test Statistic: Difference in R^2 between large amount of customers group and small amount of customers group
-Significance Level: 0.05
-P-value: 0.176
-Conclusion: We fail to reject the null hypothesis, meaning that our model is fair among large amount of customers and small amount of customers.
+### Group large amount of customers: RES.CUSTOMERS > middle value(4216573.0)
+### Group small amount of customers: RES.CUSTOMERS < middle value(4216573.0)
+### Evaluation metric: R^2
+### Null Hypothesis: Our model is fair. Its R^2 score for large amount of customers and small amount of customers are roughly the same, and any differences are due to random chance.
+### Alternative Hypothesis: Our model is unfair. Its R^2 score for large amount of customers is better than small amount of customers.
+### Test Statistic: Difference in R^2 between large amount of customers group and small amount of customers group
+### Significance Level: 0.05
+### P-value: 0.176
+**Conclusion: We fail to reject the null hypothesis, meaning that our model is fair among large amount of customers and small amount of customers.**
 
 <iframe
   src="step8-outage-fairnessanalysis.html"
-  width="600"
+  width="800"
   height="650"
   frameborder="0"
 ></iframe>
 
-From this histogram, you can see that our observed difference is as common as our simulated differences, being in the 82th percentile among them.
+### From this histogram, you can see that our observed difference is as common as our simulated differences, being in the 82th percentile among them.
 
 
 
