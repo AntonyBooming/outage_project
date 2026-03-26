@@ -1,3 +1,7 @@
+---
+layout: home
+title: ""
+---
 # What Makes a Power Outage Severe? A Data-Driven Investigation
 
 **By Antony Munkhchuluun** · UC San Diego, DSC 80
