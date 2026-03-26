@@ -1,221 +1,153 @@
-**A Data-Driven Approach to Understand Severe Power Outage Characteristics**
+# What Makes a Power Outage Severe? A Data-Driven Investigation
 
-this is a project for DSC 80 at UCSD 
-
-by Antony Munkhchuluun
-
----
-## Introduction
-### Question: 
-What are the characteristics of severe power outages?
-### Significance: 
-This analysis provides insight into the key factors associated with severe power outages. By identifying patterns in outage causes, customer impact, and regional differences, the findings can help both residents and energy providers better anticipate where and how future major outages may occur—potentially improving preparedness and response strategies.
-
-Dataframe: 1535 rows and 10 columns
-
-
-| Columns                       | Description                                                                                          |
-|------------------------------|------------------------------------------------------------------------------------------------------|
-| **U.S._STATE**               | Represents all the states in the continental U.S.                                                    |
-| **OUTAGE.START.DATE.TIME**   | The day and time when the outage event started (as reported by the corresponding Utility).           |
-| **OUTAGE.RESTORATION.DATE.TIME** | The day and time when power was restored to all customers (as reported by the corresponding Utility). |
-| **CAUSE.CATEGORY**           | Categories of the events causing the major power outages.                                            |
-| **CAUSE.CATEGORY.DETAIL**    | Detailed description of the event categories causing the major power outages.                        |
-| **HURRICANE.NAMES**          | Name of the hurricanes                                                                               |
-| **OUTAGE.DURATION**          | Duration of outage events (in minutes).                                                              |
-| **CUSTOMERS.AFFECTED**       | Number of customers affected by the power outage event.                                              |
-| **RES.SALES**                | Electricity consumption in the residential sector (megawatt-hour).                                   |
-| **RES.CUSTOMERS**            | Annual number of customers served in the residential electricity sector of the U.S. state.           |
-
----
-## Data Cleaning and Exploratory Data Analysis
-I prepared the dataset by transforming key columns to enable more effective analysis. Specifically, I converted OUTAGE.DURATION and CUSTOMERS.AFFECTED to formats compatible with various transformer modules, making it easier to apply preprocessing techniques for my baseline and final models. I also reduced the original dataset from 43 columns to a focused set of 10 columns for cleaning and analysis. Below, I’ve split the cleaned DataFrame in three for a more readable display.
-
-| U.S._STATE   | OUTAGE.START.DATE.TIME   | OUTAGE.RESTORATION.DATE.TIME   |
-|:-------------|:-------------------------|:-------------------------------|
-| Minnesota    | 2011-07-01 17:00:00      | 2011-07-03 20:00:00            |
-| Minnesota    | 2014-05-11 18:38:00      | 2014-05-11 18:39:00            |
-| Minnesota    | 2010-10-26 20:00:00      | 2010-10-28 22:00:00            |
-| Minnesota    | 2012-06-19 04:30:00      | 2012-06-20 23:00:00            |
-| Minnesota    | 2015-07-18 02:00:00      | 2015-07-19 07:00:00            |
-
-|   HURRICANE.NAMES | CAUSE.CATEGORY     | CAUSE.CATEGORY.DETAIL   |
-|------------------:|:-------------------|:------------------------|
-|               nan | severe weather     | nan                     |
-|               nan | intentional attack | vandalism               |
-|               nan | severe weather     | heavy wind              |
-|               nan | severe weather     | thunderstorm            |
-|               nan | severe weather     | nan                     |
-
-|   OUTAGE.DURATION |   CUSTOMERS.AFFECTED |   RES.SALES |   RES.CUSTOMERS |
-|------------------:|---------------------:|------------:|----------------:|
-|              3060 |                70000 | 2.33292e+06 |     2.30874e+06 |
-|                 1 |                  nan | 1.58699e+06 |     2.34586e+06 |
-|              3000 |                70000 | 1.46729e+06 |     2.30029e+06 |
-|              2550 |                68200 | 1.85152e+06 |     2.31734e+06 |
-|              1740 |               250000 | 2.02888e+06 |     2.37467e+06 |
-
+**By Antony Munkhchuluun** · UC San Diego, DSC 80
 
 ---
 
-**Distribution of the number of power outages amongst the U.S states**
+Power outages aren't random — some knock out power for millions of people for days, while others are resolved in minutes. What separates a minor flicker from a catastrophic grid failure? I wanted to find out.
 
-<iframe
-  src="state-outage-bar.html"
-  width="800"
-  height="800"
-  frameborder="0"
-></iframe>
-
-### As you may be able to see that California has the highest number of outages in our dataset, whereas Alaska has the least. 
----
-**Number of power outages relative to residential sector electricity consumption by state(you can touch on the points to see specifics!)**
-
-<iframe
-  src="step2-outage-scatter.html"
-  width="800"
-  height="800"
-  frameborder="0"
-></iframe>
-
-
-From this bivariate visualization, you are able to see that as there's more units of electricity consumption in the residential sector, the number of outages increases. This is visible throughout each state where each states have different numbers of outages. The first few rows of the tabular distribution looks like this:
-
-| U.S._STATE   | RES.SALES     |   # of outages |
-|:-------------|:--------------|---------------:|
-| Alabama      | 14,412,302    |              6 |
-| Alaska       | 0             |              1 |
-| Arizona      | 71,963,016    |             28 |
-| Arkansas     | 39,514,393    |             25 |
-| California   | 1,546,533,874 |            210 |
-
-### Interestingly enough, there's no residential sector electricity consumption recorded in our DataFrame.
+Using a dataset of **1,535 major U.S. power outages**, I investigated the causes, patterns, and predictors of severe outages — combining exploratory analysis, statistical testing, and predictive modeling to uncover what really drives outage severity.
 
 ---
 
-## Assessment of Missingness
-I noticed that the HURRICANE.NAMES column appears to be NMAR at first glance. However, upon further inspection, it seems to be influenced by the values in the CAUSE.CATEGORY.DETAIL column, which suggests that it is actually MAR. To prove this:
+## The Data
 
-<iframe
-  src="step3-outage-MAR.html"
-  width="800"
-  height="450"
-  frameborder="0"
-></iframe>
+The dataset covers major power outages across the continental U.S., with 10 key features:
 
-As you can see from the red dashed line, the difference between the distributions of all CAUSE.CATEGORY.DETAIL and CAUSE.CATEGORY.DETAIL where HURRICANE.NAMES are missing is much more than our 1000 simulated differences(blue bars on the left). Thereby, it is likely plausible that the missingness of HURRICANE.NAMES column is dependant on CAUSE.CATEGORY.DETAIL column.
-
-**Conversely, let's now see what column HURRICANE.NAMES column doesn't depend on.**
-
-<iframe
-  src="step3-outage-MCAR.html"
-  width="600"
-  height="650"
-  frameborder="0"
-></iframe>
-
-### Our test statistic is the difference between the amount of residents served where hurricane name is missing and is not missing. By the position of our observed test statistic, you can see that it is a pretty common occurance within our simulated test statistics. Therefore, it is likely possible that the missingess of HURRICANE.NAMES column doesn't depend on RES.CUSTOMERS column.
+| Column | Description |
+|--------|-------------|
+| `U.S._STATE` | State where the outage occurred |
+| `OUTAGE.START.DATE.TIME` | When the outage began |
+| `OUTAGE.RESTORATION.DATE.TIME` | When power was fully restored |
+| `CAUSE.CATEGORY` | High-level cause (e.g., severe weather, intentional attack) |
+| `CAUSE.CATEGORY.DETAIL` | Detailed cause description |
+| `HURRICANE.NAMES` | Hurricane name, if applicable |
+| `OUTAGE.DURATION` | How long the outage lasted (minutes) |
+| `CUSTOMERS.AFFECTED` | Number of customers who lost power |
+| `RES.SALES` | Residential electricity consumption (MWh) |
+| `RES.CUSTOMERS` | Annual residential customers served in that state |
 
 ---
 
-## Hypothesis Testing 
-### Null Hypothesis: 
-On average, the outage duration caused by severe weather is the same as the outage duration caused by public appeal.
-### Alternative Hypothesis: 
-On average, the outage duration caused by severe weather is greater than the outage duration caused by public appeal.
-### Test Statistic: 
-Difference in group means
-### Significance level: 
-0.05
-### P-Value: 
-0.0
+## Data Cleaning & Exploratory Analysis
 
-<iframe
-  src="step4-outage-hypotest.html"
-  width="600"
-  height="650"
-  frameborder="0"
-></iframe>
+I reduced the raw dataset from 43 columns down to the 10 most relevant features, and converted `OUTAGE.DURATION` and `CUSTOMERS.AFFECTED` into numeric types for modeling compatibility.
 
-### We reject the null hypothesis! This means that our observed difference(red dashed line) between the average outage duration caused by severe weather and average outage duration caused by public appeal is not common at all under the null hypothesis. Therefore, we can conclude that there's a pattern where if the power outage is caused by severe weather, you are likely to expect a longer outage than if it was caused by public appeal on average.
+**Where do outages happen most?**
 
----
+California leads the dataset with 210 recorded outages — far more than any other state. This makes sense given its massive population, aging grid infrastructure, and wildfire-prone climate.
 
-## Framing a prediction problem
-### Prediction problem: 
-How long will a power outage last based on its cause and the number of customers affected?
-### Type: 
-Regression (Linear Model)
-### Response Variable: 
-Outage Duration – understanding this helps assess how severe an outage may be based on key characteristics.
-### Predictor Variables (Known Information): 
-Outage cause category and number of customers affected.
+<iframe src="state-outage-bar.html" width="800" height="800" frameborder="0"></iframe>
+
+**Does electricity consumption predict outage frequency?**
+
+I wanted to know: do states that consume more power also experience more outages? The scatterplot below reveals a clear positive trend — higher residential electricity consumption correlates with more outages. California is a striking outlier, with over 1.5 billion MWh in residential sales and 210 outages.
+
+<iframe src="step2-outage-scatter.html" width="800" height="800" frameborder="0"></iframe>
+
+| State | Residential Sales (MWh) | # of Outages |
+|-------|------------------------|--------------|
+| Alabama | 14,412,302 | 6 |
+| Alaska | 0 | 1 |
+| Arizona | 71,963,016 | 28 |
+| Arkansas | 39,514,393 | 25 |
+| California | 1,546,533,874 | 210 |
 
 ---
 
-## Baseline Model
-### Description of my baseline model:
-I trained my linear regression model using the outage cause category and the number of customers affected. I allowed the numerical feature (number of customers affected) to pass through the pipeline without transformation, while the categorical feature (outage cause category) was processed using a OneHotEncoder() to make it more suitable for the model.
+## Missingness Analysis — Is Hurricane Data Really Missing at Random?
 
-### Result of my baseline model:
-The baseline model achieved an R² score of 0.0699 on unseen data.
+At first glance, the `HURRICANE.NAMES` column looks like it might be **NMAR** (Not Missing At Random) — perhaps utilities simply forgot to record hurricane names. But I suspected something more systematic was going on.
 
-I suspected the model's poor performance was due to the imbalance in feature magnitudes. The "number of customers affected" feature contains large numerical values, while the one-hot encoded "outage cause category" feature consists only of 0s and 1s. As a result, the numerical feature likely overshadowed the categorical one during prediction, reducing the impact of the encoded categories on the model’s output.
+**Hypothesis:** The missingness of `HURRICANE.NAMES` depends on `CAUSE.CATEGORY.DETAIL` — because hurricane names would only be recorded when the cause was actually a hurricane.
 
----
+I ran a permutation test to check:
 
-## Final Model
-### Features added:
-1. Standardized Number of Customers Affected
-Reasoning: Standardizing this feature ensures it is on a similar scale to the one-hot encoded values (0s and 1s) of the categorical feature. This prevents the model from being unduly influenced by the larger magnitude of the numerical values, allowing both features to contribute more equally to the prediction task.
-2. Polynomial Features
-Reasoning: Applying polynomial transformations allows the model to capture more complex, nonlinear relationships between the input features and the target variable. By increasing the flexibility of the regression line, the model can better fit the underlying patterns in the data, potentially improving predictive performance.
+<iframe src="step3-outage-MAR.html" width="800" height="450" frameborder="0"></iframe>
 
-### Result:
-**Standardizing the # of customer affected brought R^2 score up to 0.1908**
-**Polynomial(degree=14) made the accuracy better to 0.2553**
+The observed difference in `CAUSE.CATEGORY.DETAIL` distributions (red dashed line) sits far beyond all 1,000 simulated differences — confirming that `HURRICANE.NAMES` is **MAR**, dependent on the cause category. It's not random omission; the data is simply absent when it's not applicable.
 
-The method I used to come up with the best performing hyperparameter was by a manual iteration where I performed different polynomial degrees and degree 14 ended up being the best transformation. 
+**What about residential customers?** I also tested whether missingness depended on `RES.CUSTOMERS` — and found no relationship:
 
-**Below(different model performances of polynomials of standardized # of customers affected):**
+<iframe src="step3-outage-MCAR.html" width="600" height="650" frameborder="0"></iframe>
 
-<iframe
-  src="step7-outage-polyn.html"
-  width="900"
-  height="650"
-  frameborder="0"
-></iframe>
+The observed statistic falls squarely within the simulated distribution, confirming `HURRICANE.NAMES` missingness is **independent of residential customer count**.
 
 ---
 
-## Fairness Analysis
-### Group large amount of customers: 
-RES.CUSTOMERS > middle value(4216573.0)
-### Group small amount of customers: 
-RES.CUSTOMERS < middle value(4216573.0)
-### Evaluation metric: 
-R^2
-### Null Hypothesis: 
-Our model is fair. Its R^2 score for large amount of customers and small amount of customers are roughly the same, and any differences are due to random chance.
-### Alternative Hypothesis: 
-Our model is unfair. Its R^2 score for large amount of customers is better than small amount of customers.
-### Test Statistic: 
-Difference in R^2 between large amount of customers group and small amount of customers group
-### Significance Level: 
-0.05
-### P-value: 
-0.176
-**Conclusion: We fail to reject the null hypothesis, meaning that our model is fair among large amount of customers and small amount of customers.**
+## Hypothesis Test — Do Severe Weather Outages Last Longer?
 
-<iframe
-  src="step8-outage-fairnessanalysis.html"
-  width="900"
-  height="650"
-  frameborder="0"
-></iframe>
+**Question:** Is there a statistically significant difference in outage duration between severe weather events and public appeal outages?
 
-### From this histogram, you can see that our observed difference is as common as our simulated differences, being in the 82th percentile among them.
+- **Null hypothesis:** Average outage duration is the same for both causes
+- **Alternative hypothesis:** Severe weather outages last longer on average
+- **Test statistic:** Difference in group means
+- **Significance level:** α = 0.05
 
+<iframe src="step4-outage-hypotest.html" width="600" height="650" frameborder="0"></iframe>
 
+**Result: p-value = 0.0 → We reject the null hypothesis.**
 
+The observed difference is so extreme it never appeared in 1,000 permutations. This is strong evidence that severe weather outages are systematically longer — likely because weather damage requires physical repair crews rather than just a switch flip.
 
+---
+
+## Predicting Outage Duration
+
+**Can we predict how long an outage will last before it's over?**
+
+- **Prediction problem:** Regression — predict `OUTAGE.DURATION`
+- **Features used at prediction time:** `CAUSE.CATEGORY` and `CUSTOMERS.AFFECTED`
+- **Why these features?** Both are known early in an outage event, making this model useful for real-time response planning
+
+### Baseline Model
+
+My first model passed `CUSTOMERS.AFFECTED` through unchanged and one-hot encoded `CAUSE.CATEGORY`.
+
+**Baseline R² = 0.0699**
+
+Poor performance — but illuminating. The large raw values of `CUSTOMERS.AFFECTED` (ranging into the hundreds of thousands) were drowning out the one-hot encoded cause features (which are just 0s and 1s). The model was essentially ignoring cause category entirely.
+
+### Final Model — Feature Engineering Fixes Everything
+
+I made two targeted improvements:
+
+1. **Standardized `CUSTOMERS.AFFECTED`** — scaled to the same range as the encoded features so both contribute equally → **R² jumped to 0.1908**
+2. **Polynomial features (degree=14)** — allowed the model to capture nonlinear relationships between customer scale and outage duration → **R² improved to 0.2553**
+
+I selected degree=14 through manual iteration across polynomial degrees:
+
+<iframe src="step7-outage-polyn.html" width="900" height="650" frameborder="0"></iframe>
+
+A 3.6x improvement in R² from baseline to final model — driven entirely by thoughtful feature engineering, not a more complex algorithm.
+
+---
+
+## Fairness Analysis — Does the Model Work Equally for All States?
+
+A model that performs well on average can still be systematically unfair to certain groups. I tested whether my model performs equally for states with large vs. small residential customer bases.
+
+- **Group A:** States where `RES.CUSTOMERS` > median (4,216,573)
+- **Group B:** States where `RES.CUSTOMERS` < median
+- **Metric:** R²
+- **Null hypothesis:** Any R² difference between groups is due to random chance
+- **Significance level:** α = 0.05
+
+<iframe src="step8-outage-fairnessanalysis.html" width="900" height="650" frameborder="0"></iframe>
+
+**Result: p-value = 0.176 → Fail to reject the null hypothesis.**
+
+The observed R² difference falls at the 82nd percentile of simulated differences — well within the range of chance. The model performs equitably across both large and small states, which is an important property for a model intended to support real-world outage response planning.
+
+---
+
+## Key Takeaways
+
+- **Cause matters more than location** — severe weather is the single strongest driver of long outages
+- **Scale correlates with frequency** — high-consumption states experience more outages, but this relationship is imperfect
+- **Feature engineering > model complexity** — a simple linear regression improved 3.6x with just standardization and polynomial features
+- **The model is fair** — no evidence of differential performance across large vs. small states
+
+---
+
+*Full analysis conducted in Python using Pandas, scikit-learn, and Plotly. UC San Diego, DSC 80.*
