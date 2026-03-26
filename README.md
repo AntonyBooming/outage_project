@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: default
 title: ""
 ---
 # What Makes a Power Outage Severe? A Data-Driven Investigation
